@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	correctAnswer = 137
+	correctAnswer = 13390977
 	fmt.Print("Found answer: ", findAnswer(0, 1000000000))
 	fmt.Print("\nIn: ", steps, " steps")
 }
@@ -29,6 +29,7 @@ const (
 // Check if this guess is warmer or colder than the last guess. It could (in theory) be the same.
 // If there is no former guess, return incorrect.
 func checkGuess(guess int) Response {
+	// if lastGuess has not been initialized, this is first iteration, response doesn't matter.
 	if lastGuess.bool {
 		return incorrect
 	}
@@ -54,11 +55,12 @@ func Abs(x int) int {
 	return x
 }
 
+//Finds the variable "correctAnswer" within the given range via a binary search.
 func findAnswer(min, max int) int {
 	fmt.Print("Operating on range ", min, " ", max, "\n")
 	var guessA int = (min + max) / 2
 	var guessB int = guessA + 1
-	if(checkGuess(guessA) == correct) {
+	if checkGuess(guessA) == correct {
 		return guessA
 	}
 	switch checkGuess(guessB) {
@@ -77,7 +79,7 @@ func findAnswer(min, max int) int {
 			return possibility + 1
 		}
 	default:
-		print("fail")
-		return -100000
+		print("Failed to find val bc checkGuess returned a bad value")
+		return -123456789
 	}
 }
