@@ -4,7 +4,8 @@ import "fmt"
 
 func main() {
 	correctAnswer = 137
-	fmt.Print(findAnswer(0, 1000))
+	fmt.Print("Found answer: ", findAnswer(0, 1000000000))
+	fmt.Print("\nIn: ", steps, " steps")
 }
 
 type NullInt struct {
@@ -34,13 +35,15 @@ func checkGuess(guess int) Response {
 	if guess == correctAnswer {
 		return correct
 	}
-	if Abs(correctAnswer-guess) > (correctAnswer - lastGuess.int) {
+	var curEval int = Abs(correctAnswer - guess)
+	var prevEval int = Abs(correctAnswer - lastGuess.int)
+	if curEval > prevEval {
+		lastGuess.int = guess
 		return colder
-	}
-	if Abs(correctAnswer-guess) < (correctAnswer - lastGuess.int) {
+	} else {
+		lastGuess.int = guess
 		return warmer
 	}
-	return same
 }
 
 // Apparently there is no math.Abs for ints in Go :(
@@ -52,6 +55,7 @@ func Abs(x int) int {
 }
 
 func findAnswer(min, max int) int {
+	fmt.Print("Operating on range ", min, " ", max, "\n")
 	var guessA int = (min + max) / 2
 	var guessB int = guessA + 1
 	if(checkGuess(guessA) == correct) {
@@ -64,7 +68,7 @@ func findAnswer(min, max int) int {
 		return findAnswer(guessA, max)
 	case colder:
 		steps++
-		return findAnswer(min, guessA)
+		return findAnswer(min, guessB)
 	case same:
 		var possibility int = (guessA + guessB) / 2;
 		if checkGuess(possibility) == correct {
@@ -73,6 +77,7 @@ func findAnswer(min, max int) int {
 			return possibility + 1
 		}
 	default:
+		print("fail")
 		return -100000
 	}
 }
