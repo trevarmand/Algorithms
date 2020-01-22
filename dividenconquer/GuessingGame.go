@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	correctAnswer = 13390977
+	correctAnswer = 375
 	fmt.Print("Found answer: ", findAnswer(0, 1000000000))
 	fmt.Print("\nIn: ", steps, " steps")
 }
@@ -71,13 +71,6 @@ func findAnswer(min, max int) int {
 	case colder:
 		steps++
 		return findAnswer(min, guessB)
-	case same:
-		var possibility int = (guessA + guessB) / 2;
-		if checkGuess(possibility) == correct {
-			return possibility
-		} else {
-			return possibility + 1
-		}
 	default:
 		print("Failed to find val bc checkGuess returned a bad value")
 		return -123456789
