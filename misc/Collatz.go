@@ -33,21 +33,3 @@ func collatzCallCounter(target int) int {
 	results[originalTarget] = count
 	return count
 }
-
-/**
-def collatzCallCounter(self, target):
-        count = 1
-        while target != 1:
-            if target in self.callCounts:
-                count += self.callCounts[target]
-                break
-            else:
-                if target % 2 == 0:  # Even
-                    count += 1
-                    target = target // 2
-                else:
-                    count += 1
-                    target = (target * 3) + 1
-            continue
-        return count
- */
