@@ -1,4 +1,4 @@
-package main
+package dividenconquer
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ travel from any node i to any larger node j by traversing at most 2 edges.
  */
 
 func main() {
-	for _, segment := range getSegments(5) {
+	for _, segment := range getSegments(6) {
 		fmt.Print(segment, "\n")
 	}
 }
@@ -33,7 +33,7 @@ func splitAssignment(min, max int) []Segment {
 	if spread == 1 {
 		return []Segment{Segment{min, max}}
 	} else {
-		midpoint := (max + min + 1) / 2
+		midpoint := (max + min) / 2
 
 		for start := min; start < midpoint; start++ {
 			segmentSet = append(segmentSet, Segment{start, midpoint})

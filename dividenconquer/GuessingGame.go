@@ -1,4 +1,4 @@
-package main
+package dividenconquer
 
 /**
 Essentially a modification of binary search, this models a game where a player is given a game in which
