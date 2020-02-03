@@ -13,8 +13,8 @@ Determine the best schedule given a set of n weekends
 //var A = []int {3,6,5,4}
 //var B = []int {7, 12, 8, 6}
 
-var Jazz = []int {3,2,4,5,4,2,3,4}
-var Metal = []int {11,12,13,16,12,15,19,21}
+var A = []int {3,2,4,5,4,2,3,4}
+var B = []int {11,12,13,16,12,15,19,21}
 
 var results = make(map[int]int)
 
@@ -22,12 +22,12 @@ var results = make(map[int]int)
 func bestValue(i, n int) int {
 	for j := n; j >= i; j-- {
 		if j == n {
-			results[j] =  max(Jazz[j], Metal[j])
+			results[j] =  max(A[j], B[j])
 		}
 		if j == (n - 1) {
-			results[j] = max(Metal[j], Jazz[j] + results[j + 1])
+			results[j] = max(B[j], A[j] + results[j + 1])
 		} else {
-			results[j] = max(Metal[j] + results[j + 2], Jazz[j] + results[j + 1])
+			results[j] = max(B[j] + results[j + 2], A[j] + results[j + 1])
 		}
 	}
 	return results[i]
@@ -38,19 +38,19 @@ func bestSchedule(i, n int) map[int]string {
 	var concerts = make(map[int]string)
 	for j := n; j >= i; j-- {
 		if j == n {
-			results[j] =  max(Jazz[j], Metal[j])
-			concerts[j] = compare(Jazz[j], Metal[j])
+			results[j] =  max(A[j], B[j])
+			concerts[j] = compare(A[j], B[j])
 		}
 		if j == (n - 1) {
-			results[j] = max(Metal[j], Jazz[j] + results[j + 1])
-			concerts[j] = compare(Jazz[j] + results[j + 1], Metal[j])
+			results[j] = max(B[j], A[j] + results[j + 1])
+			concerts[j] = compare(A[j] + results[j + 1], B[j])
 		} else {
-			results[j] = max(Metal[j] + results[j + 2], Jazz[j] + results[j + 1])
-			if compare( Jazz[j] + results[j + 1], Metal[j] + results[j + 2]) == "jazz" {
-				concerts[j] = "jazz"
+			results[j] = max(B[j] + results[j + 2], A[j] + results[j + 1])
+			if compare( A[j] + results[j + 1], B[j] + results[j + 2]) == "A" {
+				concerts[j] = "A"
 			} else {
 				concerts[j+1] = "rest"
-				concerts[j] = "metal"
+				concerts[j] = "B"
 			}
 		}
 	}
@@ -58,18 +58,18 @@ func bestSchedule(i, n int) map[int]string {
 }
 
 
-func compare(jazz, metal int) string {
-	if jazz >= metal {
-		return "jazz"
+func compare(A, B int) string {
+	if A >= B {
+		return "A"
 	}
-		return "metal"
+		return "B"
 }
 
 func main() {
 	print(bestValue(0, 6))
 	bestScheduleMap := bestSchedule(0, 6)
 	for i := 0; i < len(bestScheduleMap); i++ {
-		fmt.Println("Took:", bestScheduleMap[i], "from options:  Jazz: ", Jazz[i], " Metal: ", Metal[i])
+		fmt.Println("Took:", bestScheduleMap[i], "from options:  A: ", A[i], " B: ", B[i])
 	}
 }
 
